@@ -4,10 +4,6 @@ import './index.css';
 import App from './App';
 import './global.css';
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ff2621e1ed2298b1442f34f8f04b64545a378ad7
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

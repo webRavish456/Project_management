@@ -3,7 +3,6 @@ import Header from "../Component/Header/Header";
 import Sidebar from "../Component/Sidebar/Sidebar";
 
 
-import MeetingSchdule from "../MeetingSchdule/MeetingSchdule";
 
 
 
@@ -17,7 +16,7 @@ const LayoutMeetingSchedule=()=>
             <div className="content">
             <Header className="header" />
             
-            <MeetingSchdule className="meetingschdule"/>
+           
             
             
             

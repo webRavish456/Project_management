@@ -1,13 +1,4 @@
 {
-<<<<<<< HEAD
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.4.7",
-    "@mui/material": "^6.4.6",
-    "react-lazy-load-image-component": "^1.6.3",
-    "react-router-dom": "^7.2.0"
-=======
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
@@ -50,6 +41,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
->>>>>>> ff2621e1ed2298b1442f34f8f04b64545a378ad7
   }
 }
