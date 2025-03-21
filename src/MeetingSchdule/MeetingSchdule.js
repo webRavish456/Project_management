@@ -18,19 +18,19 @@ import Search from "../Search/Search";
 
 const columns = [
   { id: 'SN', label: ' SI. No', minWidth: 30 },
-  { id: 'Name', label: ' Project Name', minWidth: 70 },
-  { id: 'Email', label: 'Email', minWidth: 70 },
-  {  id: 'MobileNo', label: 'Mobile number',  minWidth: 70,  align: 'right', format: (value) => value.toLocaleString('en-US'), },
-  { id: 'Address',label: 'Address',minWidth: 70, align: 'right', format: (value) => value.toLocaleString('en-US'), },
-  { id: 'CompanyName',  label: 'Company Name',  minWidth: 70,  align: 'right', format: (value) => value.toFixed(2), },
+  { id: 'ProjectTittle', label: ' Project Tittle', minWidth: 70 },
+  { id: 'Description', label: 'Project Description', minWidth: 70 },
+  {  id: 'ScheduledBy', label: 'Schedule by',  minWidth: 70,  align: 'right', format: (value) => value.toLocaleString('en-US'), },
+  { id: 'MeetingDate',label: 'Meeting Date',minWidth: 70, align: 'right', format: (value) => value.toLocaleString('en-US'), },
+  { id: 'Duration',  label: 'Duration',  minWidth: 70,  align: 'right', format: (value) => value.toFixed(2), },
   
   { id: 'Status', label: ' Status', minWidth: 70 },
   { id: 'Action', label: ' Action', minWidth: 100 },
 ];
 
-function createData(SN, Name, Email, MobileNo, Address, CompanyName,Status) {
+function createData(SN, ProjectTittle, Description, ScheduledBy, MeetingDate, Duration, Status) {
   //const density = population / size;
-  return { SN,  Name, Email, MobileNo, Address, CompanyName,Status, Action:( <><IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}}>
+  return { SN, ProjectTittle, Description, ScheduledBy, MeetingDate, Duration, Status, Action:( <><IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}}>
     <VisibilityIcon />
   </IconButton>
   <IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}}>
@@ -44,8 +44,9 @@ function createData(SN, Name, Email, MobileNo, Address, CompanyName,Status) {
 }
 
 const rows = [
-  createData(1,'Sonal', 'sonalchekhaliya165@gmail.com',288847829422, 'Jamshedpur','TCS','Completed'),
+  createData(1,'Ecommerce', 'Meeting Aenda', '01/03/2023', '01/09/2025','45 mintues','Completed'),
   
+
 ];
 
 export default function StickyHeadTable() {

@@ -18,19 +18,19 @@ import Search from "../Search/Search";
 
 const columns = [
   { id: 'SN', label: ' SI. No', minWidth: 30 },
-  { id: 'Name', label: ' Project Name', minWidth: 70 },
-  { id: 'Email', label: 'Email', minWidth: 70 },
-  {  id: 'MobileNo', label: 'Mobile number',  minWidth: 70,  align: 'right', format: (value) => value.toLocaleString('en-US'), },
-  { id: 'Address',label: 'Address',minWidth: 70, align: 'right', format: (value) => value.toLocaleString('en-US'), },
-  { id: 'CompanyName',  label: 'Company Name',  minWidth: 70,  align: 'right', format: (value) => value.toFixed(2), },
-  
-  { id: 'Status', label: ' Status', minWidth: 70 },
+  { id: 'Name', label: ' Name', minWidth: 70 },
+  { id: 'Amount', label: 'Amount', minWidth: 70 },
+  {  id: 'Transaction', label: 'Transaction on Type',  minWidth: 70,  align: 'right', format: (value) => value.toLocaleString('en-US'), },
+  { id: 'Category',label: 'Category',minWidth: 70, align: 'right', format: (value) => value.toLocaleString('en-US'), },
+  { id: 'PaymentMode',  label: 'Payment mode',  minWidth: 70,  align: 'right', format: (value) => value.toFixed(2), },
+  { id: 'TransactionDate', label: 'Transaction Date', minWidth: 70 },
+  { id: 'Status', label: 'Status', minWidth: 70 },
   { id: 'Action', label: ' Action', minWidth: 100 },
 ];
 
-function createData(SN, Name, Email, MobileNo, Address, CompanyName,Status) {
+function createData(SN, Name, Amount, Transaction,Category, PaymentMode, TransactionDate, Status) {
   //const density = population / size;
-  return { SN,  Name, Email, MobileNo, Address, CompanyName,Status, Action:( <><IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}}>
+  return { SN, Name , Amount,Transaction, Category, PaymentMode, TransactionDate, Status, Action:( <><IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}}>
     <VisibilityIcon />
   </IconButton>
   <IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}}>
@@ -44,7 +44,8 @@ function createData(SN, Name, Email, MobileNo, Address, CompanyName,Status) {
 }
 
 const rows = [
-  createData(1,'Sonal', 'sonalchekhaliya165@gmail.com',288847829422, 'Jamshedpur','TCS','Completed'),
+  createData(1,'Ravish', 10000, 'Income/Expense', 'salary','cash','12-03-2025','Completed'),
+  
   
 ];
 

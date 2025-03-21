@@ -10,7 +10,11 @@ import TableRow from '@mui/material/TableRow';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+<<<<<<< HEAD
 import { Box, IconButton ,Button} from '@mui/material';
+=======
+import { Box, IconButton ,Button,MenuItem,InputLabel,Select,FormControl} from '@mui/material';
+>>>>>>> ff2621e1ed2298b1442f34f8f04b64545a378ad7
 import Search from "../Search/Search";
 import { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
@@ -58,10 +62,22 @@ export default function StickyHeadTable() {
     setViewData(false)
   }
 
+<<<<<<< HEAD
 
 
 
 
+=======
+  const handlePriorityChange = (event) => setPriority(event.target.value); // Priority Change
+
+
+  const [priority, setPriority] = useState(""); // Priority State
+
+  const handlePojectStutsChange = (event) => setProjectStuts(event.target.value); // Priority Change
+
+
+  const [ProjectStatus, setProjectStuts] = useState(""); // Priority State
+>>>>>>> ff2621e1ed2298b1442f34f8f04b64545a378ad7
 
 
 
@@ -112,10 +128,17 @@ export default function StickyHeadTable() {
   
   const rows = [
     createData(1,'Ecommerce', 'Ecommerce Description', '01/03/2023', '01/09/2025',10000,'low','Completed'),
+<<<<<<< HEAD
     createData(2,'Inventory', 'Inventory Management', '02/03/2023', '04/09/2025',10000,'High','Completed'),
     createData(3,'Learning', 'Learning Mnagement', '01/03/2023', '05/09/2025',10000,'Medium','On Hold'),
     createData(4,'Mobile App', 'Mobile App Development', '01/03/2023', '01/09/2025',10000,'low','Completed'),
     createData(5,'Media', 'Social Media', '01/03/2023', '03/09/2025',10000,'High','Active'),
+=======
+    createData(2,'Inventory', 'Inventory Management', '01/03/2023', '01/09/2025',10000,'High','Completed'),
+    createData(3,'Learning', 'Learning Mnagement', '01/03/2023', '01/09/2025',10000,'Medium','On Hold'),
+    createData(4,'Mobile App', 'Mobile App Development', '01/03/2023', '01/09/2025',10000,'low','Completed'),
+    createData(5,'Media', 'Social Media', '01/03/2023', '01/09/2025',10000,'High','Active'),
+>>>>>>> ff2621e1ed2298b1442f34f8f04b64545a378ad7
     
   
   ];
@@ -229,12 +252,32 @@ export default function StickyHeadTable() {
           <TextField label="Project End Date" variant="outlined" fullWidth />
         </Grid>
         <Grid item xs={6}>
+<<<<<<< HEAD
           <TextField label="Priority" variant="outlined" fullWidth />
+=======
+          {/* <TextField label="Priority" variant="outlined" fullWidth /> */}
+          <InputLabel>Priority</InputLabel>
+            <Select value={priority} onChange={handlePriorityChange} label="Priority">
+              <MenuItem value="Low">Low</MenuItem>
+              <MenuItem value="Medium">Medium</MenuItem>
+              <MenuItem value="High">High</MenuItem>
+            </Select>
+>>>>>>> ff2621e1ed2298b1442f34f8f04b64545a378ad7
         </Grid>
 
         {/* Row 3 */}
         <Grid item xs={6}>
+<<<<<<< HEAD
           <TextField label="Project Status" variant="outlined" fullWidth />
+=======
+        <InputLabel>ProjectStatus</InputLabel>
+            <Select value={ProjectStatus} onChange={handlePojectStutsChange} label="Project Stuts">
+              <MenuItem value="Low">Low</MenuItem>
+              <MenuItem value="Medium">Medium</MenuItem>
+              <MenuItem value="Complete">Complete</MenuItem>
+            </Select>
+
+>>>>>>> ff2621e1ed2298b1442f34f8f04b64545a378ad7
         </Grid>
 
         {/* Row 4 */}
@@ -267,14 +310,66 @@ export default function StickyHeadTable() {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" className='dialogTitle'>
+<<<<<<< HEAD
           Delete Project's Details
+=======
+          View Project's Details
+>>>>>>> ff2621e1ed2298b1442f34f8f04b64545a378ad7
           <CloseIcon onClick={handleClose2}/>
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
+<<<<<<< HEAD
             Are you sure, want to Delete
 
           <Box sx={{ display:'flex', justifyContent:'flex-end', gap:'10px',marginTop:'10px'}}>
+=======
+          <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={2}> 
+        {/* Row 1 */}
+        <Grid item xs={6}>
+          <TextField label="Project Title" variant="outlined" fullWidth sx={{ height: "100%" }} />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField label="Project Start Date" variant="outlined" fullWidth />
+        </Grid>
+
+        {/* Row 2 */}
+        <Grid item xs={6}>
+          <TextField label="Project End Date" variant="outlined" fullWidth />
+        </Grid>
+        <Grid item xs={6}>
+          {/* <TextField label="Priority" variant="outlined" fullWidth /> */}
+          <FormControl fullWidth sx={{ mt: 2 }}>
+            <InputLabel>Priority</InputLabel>
+            <Select value={priority} onChange={handlePriorityChange} label="Priority">
+              <MenuItem value="Low">Low</MenuItem>
+              <MenuItem value="Medium">Medium</MenuItem>
+              <MenuItem value="High">High</MenuItem>
+            </Select>
+          </FormControl>
+      
+        </Grid>
+
+        {/* Row 3 */}
+        <Grid item xs={6}>
+          <TextField label="Project Status" variant="outlined" fullWidth />
+        </Grid>
+
+        {/* Row 4 */}
+        <Grid item xs={6}>
+          <TextField label="Budget" variant="outlined" fullWidth />
+        </Grid>
+        
+        {/* Row 3 */}
+        <Grid item xs={12}>
+          <TextField label="Project Description" variant="outlined" fullWidth />
+        </Grid>
+ 
+      </Grid>
+    </Box>
+           <Box sx={{ display:'flex', justifyContent:'flex-end', gap:'10px',marginTop:'10px'}}>
+>>>>>>> ff2621e1ed2298b1442f34f8f04b64545a378ad7
                <Button className="primary_button">Cancel</Button>
                <Button className="primary_button">Delete</Button>
             </Box >          

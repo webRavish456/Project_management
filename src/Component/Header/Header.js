@@ -21,6 +21,7 @@ const Header=()=>
 
 
     const settings = ['My Profile',  'Logout'];
+<<<<<<< HEAD
 
 
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -44,12 +45,25 @@ const Header=()=>
         <AppBar position="static" style={{backgroundColor:"#ffffff", height:"60px"}}>
         
           <Box sx={{ flexGrow: 0, padding:"10px 30px",display:'flex', justifyContent:"flex-end" }}>
+=======
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+  
+    const handleOpenNavMenu = (event) => {setAnchorElNav(event.currentTarget);};
+    const handleOpenUserMenu = (event) => {  setAnchorElUser(event.currentTarget); };
+    const handleCloseUserMenu = () => { setAnchorElUser(null);};
+    return (
+        <>
+        <AppBar position="static" style={{backgroundColor:"#ffffff", height:"60px"}}>
+         <Box sx={{ flexGrow: 0, padding:"10px 30px",display:'flex', justifyContent:"flex-end" }}>
+>>>>>>> ff2621e1ed2298b1442f34f8f04b64545a378ad7
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Ravish" src="Ravish" />
               </IconButton>
             </Tooltip>
             <Menu
+<<<<<<< HEAD
               sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
@@ -65,6 +79,11 @@ const Header=()=>
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+=======
+              sx={{ mt: '45px' }} id="menu-appbar" anchorEl={anchorElUser} anchorOrigin={{ vertical: 'top',horizontal: 'right', }}
+              keepMounted transformOrigin={{ vertical: 'top', horizontal: 'right', }} 
+               open={Boolean(anchorElUser)}onClose={handleCloseUserMenu} >
+>>>>>>> ff2621e1ed2298b1442f34f8f04b64545a378ad7
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>

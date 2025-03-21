@@ -18,19 +18,19 @@ import Search from "../Search/Search";
 
 const columns = [
   { id: 'SN', label: ' SI. No', minWidth: 30 },
-  { id: 'Name', label: ' Project Name', minWidth: 70 },
-  { id: 'Email', label: 'Email', minWidth: 70 },
-  {  id: 'MobileNo', label: 'Mobile number',  minWidth: 70,  align: 'right', format: (value) => value.toLocaleString('en-US'), },
-  { id: 'Address',label: 'Address',minWidth: 70, align: 'right', format: (value) => value.toLocaleString('en-US'), },
-  { id: 'CompanyName',  label: 'Company Name',  minWidth: 70,  align: 'right', format: (value) => value.toFixed(2), },
+  { id: 'ProjectTittle', label: ' Project Tittle', minWidth: 70 },
+  { id: 'Assignee', label: 'Assignee', minWidth: 70 },
+  {  id: 'StartDate', label: 'Project Start date',  minWidth: 70,  align: 'right', format: (value) => value.toLocaleString('en-US'), },
+  { id: 'EndDate',label: 'Project end Date',minWidth: 70, align: 'right', format: (value) => value.toLocaleString('en-US'), },
   
-  { id: 'Status', label: ' Status', minWidth: 70 },
+  { id: 'Priority', label: ' Priority', minWidth: 70 },
+  { id: 'ProjectStatus', label: ' Project Status', minWidth: 70 },
   { id: 'Action', label: ' Action', minWidth: 100 },
 ];
 
-function createData(SN, Name, Email, MobileNo, Address, CompanyName,Status) {
+function createData(SN, ProjectTittle, Assignee, StartDate, EndDate,  Priority, ProjectStatus) {
   //const density = population / size;
-  return { SN,  Name, Email, MobileNo, Address, CompanyName,Status, Action:( <><IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}}>
+  return { SN, ProjectTittle, Assignee, StartDate, EndDate,  Priority, ProjectStatus, Action:( <><IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}}>
     <VisibilityIcon />
   </IconButton>
   <IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}}>
@@ -44,7 +44,8 @@ function createData(SN, Name, Email, MobileNo, Address, CompanyName,Status) {
 }
 
 const rows = [
-  createData(1,'Sonal', 'sonalchekhaliya165@gmail.com',288847829422, 'Jamshedpur','TCS','Completed'),
+  createData(1,'Ecommerce', 'Ravish Sir', '01/03/2023', '01/09/2025','low','Completed'),
+  createData(1,'Ecommerce', 'Rajat', '01/03/2023', '01/09/2025','low','Completed'),
   
 ];
 
@@ -66,7 +67,7 @@ export default function StickyHeadTable() {
        <Search/>
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table" >
+        <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (
