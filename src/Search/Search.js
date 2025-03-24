@@ -3,19 +3,21 @@ import { TextField, Button, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 
-const Search = ({ searchTerm, setSearchTerm, handleClickOpen }) => {
+const Search = ({ searchTerm, setSearchTerm, onAddClick }) => {
   return (
 
     <Box
- 
-     style={{ display:"flex", 
-     justifyContent:"flex-end", 
-     width:"100%",
-      alignItems:"center", 
-      gridColumnGap:"20px", marginBottom:"10px", marginTop:"10px", marginRight:"0px"}}
-     
+
+      style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        width: "100%",
+        alignItems: "center",
+        gridColumnGap: "20px", marginBottom: "10px", marginTop: "10px", marginRight: "0px"
+      }}
+
     >
-  
+
       <TextField
         variant="outlined"
         size="small"
@@ -27,13 +29,13 @@ const Search = ({ searchTerm, setSearchTerm, handleClickOpen }) => {
         }}
         className="search"
       />
-       <Box className="buttonContainer">
-      <Button variant="contained" color="primary" className="primary_button"   marginLeft="0px" tartIcon={<AddIcon />} onClick={handleClickOpen}>
-        Add New
-      </Button>
+      <Box className="buttonContainer">
+        <Button variant="contained" color="primary" className="primary_button" marginLeft="0px" tartIcon={<AddIcon />} onClick={onAddClick}>
+          Add New
+        </Button>
       </Box>
     </Box>
-    
+
   );
 };
 
