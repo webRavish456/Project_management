@@ -1,152 +1,204 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, IconButton ,Button,MenuItem,InputLabel,Select,FormControl} from '@mui/material';
+import React, { useState } from "react";
+
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+import CloseIcon from "@mui/icons-material/Close";
 import Search from "../Search/Search";
-import { useState } from 'react';
-import Dialog from '@mui/material/Dialog';
-//import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@mui/material/TextField';
-import { Grid } from '@mui/material';
 
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow ,
+  Box,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  IconButton,
+  Button,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  Grid,
+  useMediaQuery,
+} from "@mui/material";
+import CommonDialog from "../Component/CommonDialog/CommonDialog";
+import ViewDiscount from "./View/View";
+import CreateDiscount from "./Create/Create";
+import EditDiscount from "./Edit/Edit";
+import DeleteDiscount from "./Delete/Delete";
 
+const Discount=()=>
+{
 
+  const [openData, setOpenData] = useState(false)
 
-const columns = [
-  { id: 'SN', label: ' SI. No', minWidth: 30 },
-  { id: 'ProjectTittle', label: ' Project Tittle', minWidth: 70 },
-  { id: 'Description', label: 'Project Description', minWidth: 70 },
-  {  id: 'StartDate', label: 'Project Start date',  minWidth: 70,align: 'center', format: (value) => value.toLocaleString('en-US'), },
-  { id: 'Budget',  label: 'Budget',  minWidth: 70,align: 'centert', format: (value) => value.toLocaleString('en-US'), },
-  { id: 'EndDate',label: 'Project end Date',minWidth: 70,align: 'center', format: (value) => value.toLocaleString('en-US'), },
-  { id: 'Priority', label: ' Priority', minWidth: 70,align: 'center', format: (value) => value.toLocaleString('en-US'), },
-  { id: 'ProjectStatus', label: ' Project Status', minWidth: 70,align: 'center', format: (value) => value.toLocaleString('en-US'), },
-  { id: 'Action', label: ' Action', minWidth: 100 },
-];
+  const [viewData, setViewData] = useState(false)
 
+  const [editData, setEditData] = useState(false)
 
+  const [deleteData, setDeleteData] = useState(false)
 
-export default function StickyHeadTable() {
- 
-   const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    
-
-  
-  const [viewData, setViewData] =useState(false)
-
-  const handleView=()=>
+ const handleView = () =>
   {
     setViewData(true)
   }
 
-  const handleClose=()=>
-  {
-    setViewData(false)
-  }
+const handleEdit = () =>
+{
+   setEditData(true)
+}
 
-  const handlePriorityChange = (event) => setPriority(event.target.value); // Priority Change
-
-
-  const [priority, setPriority] = useState(""); // Priority State
-
-  const handlePojectStutsChange = (event) => setProjectStuts(event.target.value); // Priority Change
-
-
-  const [ProjectStatus, setProjectStuts] = useState(""); // Priority State
-
-
-
-  const [editData, setEditData] =useState(false)
-
-  const handleEdit=()=>
-  {
-    setEditData(true)
-  }
-  const handleClose1=()=>
-    {
-      setEditData(false)
-    }
-  
-
-  
-
-
-  const [deleteData, setDeleteData] =useState(false)
-
-  const handleDelete=()=>
+const handleDelete = () =>
   {
     setDeleteData(true)
   }
-  const handleClose2=()=>
-    {
-      setDeleteData(false)
-    }
-  
 
+    const columns = [
+        { id: 'si', label: 'SI. No', flex:1, align:'center' },
+        { id: 'ProjectName', label: 'Project Name', flex:1,align:'center' },
+        {
+          id: 'ProjectDescription',
+          label: 'Project Description',
+          flex:1,
+          align:'center'
+        },
+        {
+          id: 'StartDate',
+          label: 'Start Date',
+          flex:1,
+           align:'center'
+        },
+        {
+          id: 'EndDate',
+          label: 'End Date',
+          flex:1,
+          align:'center',
+        },
+        {
+            id: 'Priority',
+            label: 'Priority',
+            flex:1,
+            align:'center',
+          },
+          {
+            id: 'Budget',
+            label: 'Budget',
+            flex:1,
+            align:'center',
+          },
 
+          {
+            id: 'Status',
+            label: 'Status',
+            flex:1,
+            align:'center',
+          },
 
-  
-  function createData(SN, ProjectTittle, Description, StartDate, EndDate, Budget, Priority, ProjectStatus, ) {
-    //const density = population / size;
-    return { SN, ProjectTittle, Description, StartDate, EndDate, Budget, Priority, ProjectStatus, Action:( <><IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}}>
-      <VisibilityIcon  onClick={handleView} />
-    </IconButton>
-    <IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}}>
-      <EditIcon  onClick={handleEdit}/>
-    </IconButton>
-    <IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}}>
-      <DeleteIcon  onClick={handleDelete}/>
-    </IconButton>
-    </>)} 
-     
-  }
-  
-  const rows = [
-    createData(1,'Ecommerce', 'Ecommerce Description', '01/03/2023', '01/09/2025',10000,'low','Completed'),
-    createData(2,'Inventory', 'Inventory Management', '01/03/2023', '01/09/2025',10000,'High','Completed'),
-    createData(3,'Learning', 'Learning Mnagement', '01/03/2023', '01/09/2025',10000,'Medium','On Hold'),
-    createData(4,'Mobile App', 'Mobile App Development', '01/03/2023', '01/09/2025',10000,'low','Completed'),
-    createData(5,'Media', 'Social Media', '01/03/2023', '01/09/2025',10000,'High','Active'),
+          {
+            id: 'actions',
+            label: 'Action',
+            flex:1,
+            align:'center',
+          },
+      ];
+      
+      function createData(si, ProjectName, ProjectDescription, StartDate, EndDate, Priority, Budget, Status) {
+        return {
+          si,
+          ProjectName,
+          ProjectDescription,
+          StartDate,
+          EndDate,
+          Priority,
+          Budget,
+          Status,
+          actions: (
+            <>
+              <IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}} onClick={handleView}>
+                <VisibilityIcon  />
+              </IconButton>
+              <IconButton style={{color:"#000", padding:"4px",transform:"scale(0.8)"}} onClick={handleEdit} >
+                <EditIcon />
+              </IconButton>
+              <IconButton style={{color:"#000", padding:"4px",transform:"scale(0.8)"}} onClick={handleDelete}>
+                <DeleteIcon />
+              </IconButton>
+            </>
+          ),
+        };
+      }
+      
+      const rows = [
+        createData(1, "Ecommerce", "Ecommerce Description","10/03/2025", "10/10/2025", "High",10000, "Complete",),
+        createData(2, "Learning", "Learning Mnagement","11/03/2025", "15/10/2025", "Low",20000, "On Hold",),
+        createData(3, "Real State", "Real State Mnagement","15/03/2025", "16/10/2025", "High",30000, "Complete",),
+        createData(4, "Inventory", "Inventory Mnagement","17/03/2025", "18/10/2025", "Medium",40000, "On Hold",),
+        createData(5, "Clinic", "Clinic Mnagement","19/03/2025", "20/10/2025", "Low",10000, "Complete",),
+
+      
+      ];
+
+      const [page, setPage] = useState(0);
+      const [rowsPerPage, setRowsPerPage] = useState(10);
     
+      const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+      };
+    
+      const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+      };
+
+      const onAddClick =()=>
+        {
+          setOpenData(true)
+        }
+   
+        const handleClose = () => {
+          setEditData(false)
+          setViewData(false)
+          setOpenData(false)
+          setDeleteData(false)
+       };
+   
+       const handleSubmit = (e) => {
+         e.preventDefault();
+         setOpenData(false)
+         // console.log("Form Data Submitted:", formData);
+       }
+
+       const handleUpdate = (e) => {
+          e.preventDefault();
+          setEditData(false)
+       }
   
-  ];
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  return (
-    <Box classname="container" > 
-       <Search/>
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table" >
+    return (
+      
+      <Box className="container">
+        <Search onAddClick={onAddClick}/>
+     <Paper sx={{ width: '100%', overflow:"hidden" }}>
+      <TableContainer  >
+        <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{ minWidth: column.minWidth, fontWeight:900 }}
                 >
                   {column.label}
                 </TableCell>
@@ -185,173 +237,27 @@ export default function StickyHeadTable() {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
-
-    <Dialog
-        open={viewData}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" className='dialogTitle'>
-          View Project's Details
-          <CloseIcon onClick={handleClose}/>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
    
-      </Dialog>
+     <CommonDialog 
+      open={openData || viewData || editData || deleteData} 
+      onClose={handleClose}
+      dialogTitle={ <>
+         {openData? "Create New Project" : viewData ? "View Project Details": editData?"Edit Project Details":deleteData?"Delete Project Details ":null}
+      </>}
       
-      <Dialog
-        open={editData}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" className='dialogTitle'>
-          Edit Project's Details
-          <CloseIcon onClick={handleClose1}/>
-        </DialogTitle>
-        <DialogContent  className='DialogContent'>
-          
-            
-            <DialogContentText id="alert-dialog-description"  className='DialogContent'/>
-            <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}> 
-        {/* Row 1 */}
-        <Grid item xs={6}>
-          <TextField label="Project Title" variant="outlined" fullWidth sx={{ height: "100%" }} />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField label="Project Start Date" variant="outlined" fullWidth />
-        </Grid>
-
-        {/* Row 2 */}
-        <Grid item xs={6}>
-          <TextField label="Project End Date" variant="outlined" fullWidth />
-        </Grid>
-        <Grid item xs={6}>
-          {/* <TextField label="Priority" variant="outlined" fullWidth /> */}
-          <InputLabel>Priority</InputLabel>
-            <Select value={priority} onChange={handlePriorityChange} label="Priority">
-              <MenuItem value="Low">Low</MenuItem>
-              <MenuItem value="Medium">Medium</MenuItem>
-              <MenuItem value="High">High</MenuItem>
-            </Select>
-        </Grid>
-
-        {/* Row 3 */}
-        <Grid item xs={6}>
-        <InputLabel>ProjectStatus</InputLabel>
-            <Select value={ProjectStatus} onChange={handlePojectStutsChange} label="Project Stuts">
-              <MenuItem value="Low">Low</MenuItem>
-              <MenuItem value="Medium">Medium</MenuItem>
-              <MenuItem value="Complete">Complete</MenuItem>
-            </Select>
-
-        </Grid>
-
-        {/* Row 4 */}
-        <Grid item xs={6}>
-          <TextField label="Budget" variant="outlined" fullWidth />
-        </Grid>
+      dialogContent = {
+         openData ? <CreateDiscount handleSubmit={handleSubmit} handleClose={handleClose} /> :
+          viewData ? <ViewDiscount /> : 
+         editData ? <EditDiscount handleUpdate={handleUpdate} handleClose={handleClose} /> : 
+         deleteData? <DeleteDiscount handleDelete={handleDelete} handleClose={handleClose} />:null
         
-        {/* Row 3 */}
-        <Grid item xs={12}>
-          <TextField label="Project Description" variant="outlined" fullWidth />
-        </Grid>
- 
-      </Grid>
-    </Box>
-           <Box sx={{ display:'flex', justifyContent:'flex-end', gap:'10px',marginTop:'10px'}}>
-               <Button className="primary_button">Cancel</Button>
-               <Button className="primary_button">Update</Button>
-            </Box >
-            
- 
-          
-        </DialogContent>
-   
-      </Dialog>
-     
-      <Dialog
-        open={deleteData}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" className='dialogTitle'>
-          View Project's Details
-          <CloseIcon onClick={handleClose2}/>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-          <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}> 
-        {/* Row 1 */}
-        <Grid item xs={6}>
-          <TextField label="Project Title" variant="outlined" fullWidth sx={{ height: "100%" }} />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField label="Project Start Date" variant="outlined" fullWidth />
-        </Grid>
+      }
 
-        {/* Row 2 */}
-        <Grid item xs={6}>
-          <TextField label="Project End Date" variant="outlined" fullWidth />
-        </Grid>
-        <Grid item xs={6}>
-          {/* <TextField label="Priority" variant="outlined" fullWidth /> */}
-          <FormControl fullWidth sx={{ mt: 2 }}>
-            <InputLabel>Priority</InputLabel>
-            <Select value={priority} onChange={handlePriorityChange} label="Priority">
-              <MenuItem value="Low">Low</MenuItem>
-              <MenuItem value="Medium">Medium</MenuItem>
-              <MenuItem value="High">High</MenuItem>
-            </Select>
-          </FormControl>
-      
-        </Grid>
-
-        {/* Row 3 */}
-        <Grid item xs={6}>
-          <TextField label="Project Status" variant="outlined" fullWidth />
-        </Grid>
-
-        {/* Row 4 */}
-        <Grid item xs={6}>
-          <TextField label="Budget" variant="outlined" fullWidth />
-        </Grid>
-        
-        {/* Row 3 */}
-        <Grid item xs={12}>
-          <TextField label="Project Description" variant="outlined" fullWidth />
-        </Grid>
- 
-      </Grid>
-    </Box>
-           <Box sx={{ display:'flex', justifyContent:'flex-end', gap:'10px',marginTop:'10px'}}>
-               <Button className="primary_button">Cancel</Button>
-               <Button className="primary_button">Delete</Button>
-            </Box >          
-            </DialogContentText>
-        </DialogContent>
-   
-      </Dialog>
+      />
 
       
     </Box>
-  );
+    )
 }
 
-
-
-/*      <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>*/
+export default Discount;
