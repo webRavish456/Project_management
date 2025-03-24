@@ -7,15 +7,17 @@ const Search = ({ searchTerm, setSearchTerm, onAddClick }) => {
   return (
 
     <Box
- 
-     style={{ display:"flex", 
-     justifyContent:"flex-end", 
-     width:"100%",
-      alignItems:"center", 
-      gridColumnGap:"20px", marginBottom:"10px", marginTop:"10px", marginRight:"0px"}}
-     
+
+      style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        width: "100%",
+        alignItems: "center",
+        gridColumnGap: "20px", marginBottom: "10px", marginTop: "10px", marginRight: "0px"
+      }}
+
     >
-  
+
       <TextField
         variant="outlined"
         size="small"
@@ -27,13 +29,20 @@ const Search = ({ searchTerm, setSearchTerm, onAddClick }) => {
         }}
         className="search"
       />
+<<<<<<< HEAD
        <Box className="buttonContainer">
       <Button variant="contained" color="primary" className="primary_button"   marginLeft="0px" tartIcon={<AddIcon />} onClick={onAddClick}>
         Add New
       </Button>
+=======
+      <Box className="buttonContainer">
+        <Button variant="contained" color="primary" className="primary_button" marginLeft="0px" tartIcon={<AddIcon />} onClick={onAddClick}>
+          Add New
+        </Button>
+>>>>>>> ebeda794dbe6328105050e4b23a2c8e5abc5ed6b
       </Box>
     </Box>
-    
+
   );
 };
 
