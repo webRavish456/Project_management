@@ -115,4 +115,4 @@ export default function StickyHeadTable() {
     </Paper>
     </Box>
   );
-} 
+}
