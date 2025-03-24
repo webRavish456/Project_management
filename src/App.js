@@ -5,11 +5,11 @@ import LayoutDashboard from "./Layout/LayoutDashboard";
 import LayoutProject from "./Layout/LayoutProject";
 import LayoutLeads from "./Layout/LayoutLeads";
 import LayoutTask from "./Layout/LayoutTask";
-
 import LayoutClient from "./Layout/LayoutClient";
 import LayoutFinance from "./Layout/LayoutFinance";
-import LayoutMeetingSchedul from "./Layout/LayoutMeetingSchedule";
-import { Dialog } from "@mui/material";
+import LayoutMeetingScheduled from "./Layout/LayoutMeetingScheduled";
+
+
 
 
 
@@ -24,9 +24,10 @@ function App() {
         <Route path="/project" element={<LayoutProject />}/>
         <Route path="/leads" element={<LayoutLeads/>}/>
         <Route path="/task" element={<LayoutTask/>}/>
-        <Route path="/meetingschdule" element={<LayoutMeetingSchedul/>}/>
+        
         <Route path="/client" element={<LayoutClient/>}/>
         <Route path="/finance" element={<LayoutFinance/>}/>
+        <Route path="meetingscheduled" element={<LayoutMeetingScheduled/>}/>
         
     
         

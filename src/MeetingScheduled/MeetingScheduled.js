@@ -38,7 +38,7 @@ import CreateDiscount from "./Create/Create";
 import EditDiscount from "./Edit/Edit";
 import DeleteDiscount from "./Delete/Delete";
 
-const Leads=()=>
+const MeetingScheduled=()=>
 {
 
   const [openData, setOpenData] = useState(false)
@@ -66,17 +66,17 @@ const handleDelete = () =>
 
     const columns = [
         { id: 'si', label: 'SI. No', flex:1, align:'center' },
-        { id: 'LeasdsName', label: 'Lead`s Name', flex:1,align:'center' },
-        { id: 'Email', label: 'Email',  flex:1,  align:'center' },
-        { id: 'MobileNo', label: 'Mobile No', flex:1,  align:'center' },
-        { id: 'Address',   label: 'Address', flex:1, align:'center', },
-        { id: 'Source', label: 'Source', flex:1, align:'center',},
+        { id: 'ProjectTittle', label: 'Project  Name', flex:1,align:'center' },
+        { id: 'Description', label: 'description',  flex:1,  align:'center' },
+        { id: 'Scheduledby', label: 'Scheduled by', flex:1,  align:'center' },
+        { id: 'MeetingDate',   label: 'Meeting Date', flex:1, align:'center', },
+        { id: 'Duration', label: 'Duration', flex:1, align:'center',},
         { id: 'status',label: 'Status', flex:1, align:'center', },
-        { id: 'action', label: 'Action',flex:1, align:'center', },
+        { id: 'actions', label: 'Action',flex:1, align:'center', },
       ];
       
-      function createData(si, LeasdsName, Email, MobileNo, Address, Source, status) {
-        return { si, LeasdsName,Email,MobileNo, Address, Source, status, action: (
+      function createData(si, ProjectTittle, Description, Scheduledby, MeetingDate, Duration, status) {
+        return { si, ProjectTittle, Description, Scheduledby, MeetingDate, Duration, status, actions: (
             <>
               <IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}} onClick={handleView}>
                 <VisibilityIcon  />
@@ -93,7 +93,7 @@ const handleDelete = () =>
       }
       
       const rows = [
-        createData(1, "Rajat Kumar", "Kravish4562gmail.com", 9988776655, "Ranchi", "social Media","View" ),
+        createData(1, "ecommerce", "Meeting Agenda", "01/03/2025", "01/09/2025", "45 mintues","Completed", ),
         ];
 
       const [page, setPage] = useState(0);
@@ -120,6 +120,7 @@ const handleDelete = () =>
           setDeleteData(false)
        };
    
+       
        const handleSubmit = (e) => { e.preventDefault(); setOpenData(false)
          // console.log("Form Data Submitted:", formData);
        }
@@ -187,7 +188,7 @@ const handleDelete = () =>
       open={openData || viewData || editData || deleteData} 
       onClose={handleClose}
       dialogTitle={ <>
-         {openData? "Create New Leads" : viewData ? "View Leads Details": editData?"Edit Leads Details":deleteData?"Delete Leads":null}
+         {openData? "Create New Meeting" : viewData ? "View Meeting Details": editData?"Edit Meeting Details":deleteData?"Delete Meeting":null}
       </>}
       
       dialogContent = {
@@ -205,4 +206,4 @@ const handleDelete = () =>
     )
 }
 
-export default Leads;
+export default MeetingScheduled;

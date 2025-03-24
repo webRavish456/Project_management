@@ -3,7 +3,9 @@ import { TextField, Button, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 
-const Search = ({ searchTerm, setSearchTerm, handleClickOpen }) => {
+
+
+const Search = ({ searchTerm, setSearchTerm, onAddClick }) => {
   return (
 
     <Box
@@ -28,7 +30,7 @@ const Search = ({ searchTerm, setSearchTerm, handleClickOpen }) => {
         className="search"
       />
        <Box className="buttonContainer">
-      <Button variant="contained" color="primary" className="primary_button"   marginLeft="0px" tartIcon={<AddIcon />} onClick={handleClickOpen}>
+      <Button variant="contained" color="primary" className="primary_button"   marginLeft="0px" tartIcon={<AddIcon />} onClick={onAddClick}>
         Add New
       </Button>
       </Box>

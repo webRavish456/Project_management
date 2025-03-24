@@ -19,7 +19,7 @@ const Menuitems = [
     {
       icon: "/sidebar/meeting.png",
       label: "Meeting Schedul",
-      href: "/meetingschdule",
+      href: "/meetingscheduled",
     },
     {
       icon: "/sidebar/client.png",

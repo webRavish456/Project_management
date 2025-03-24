@@ -1,22 +1,18 @@
-import React from "react";
+
 import Header from "../Component/Header/Header";
 import Sidebar from "../Component/Sidebar/Sidebar";
-
-
-
-
-
-const LayoutMeetingSchedule=()=>
+import MeetingScheduled from "../MeetingScheduled/MeetingScheduled";
+const LayoutMeetingScheduled=()=>
 {
     return (
         <>
           <div className="layout">
-          <div className="main-container">
+        <div className="main-container">
             <Sidebar/>
             <div className="content">
             <Header className="header" />
             
-           
+            <MeetingScheduled className="meetingscheduled" />
             
             
             
@@ -29,4 +25,4 @@ const LayoutMeetingSchedule=()=>
     )
 }
 
-export default LayoutMeetingSchedule;
+export default LayoutMeetingScheduled;
