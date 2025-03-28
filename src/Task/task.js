@@ -1,93 +1,182 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Search from '../Search/Search';
-import Box from '@mui/material/Box';
+import React, { useState } from "react";
 
-const columns = [
-  {
-    id: 'Sln',
-    label: 'Sl.no',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  
-  { id: 'name', label: 'Project Tittle', minWidth: 170 },
-  
-  {
-    id: 'assigne',
-    label: 'Project Assigne',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'Sdate',
-    label: 'Project Start Date',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'edate',
-    label: 'Project End Date',
-    format: (value) => value.toLocaleString('en-US'),
-  },
- 
-  {
-    id: 'Priority',
-    label: 'Priority',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'Status',
-    label: 'Project Status',
-    format: (value) => value.toLocaleString('en-US'),
-    
-},
-{
-  id: 'action',
-  label: 'Action',
-  format: (value) => value.toLocaleString('en-US'),
-},
-];
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-function createData( sln, name, assigne, sdate, edate, priority, status, action) 
+// import CloseIcon from "@mui/icons-material/Close";
+import Search from "../Search/Search";
+
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow ,
+  Box,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  IconButton,
+  Button,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  Grid,
+  useMediaQuery,
+} from "@mui/material";
+import CommonDialog from "../Component/CommonDialog/CommonDialog";
+import ViewTask from "./View/View";
+import CreateTask from "./Create/Create";
+import EditTask from "./Edit/Edit";
+import DeleteTask from "./Delete/Delete";
+
+const Task=()=>
 {
-  
-  return { sln, name, assigne, sdate, edate, priority, status, action };
+
+  const [openData, setOpenData] = useState(false)
+
+  const [viewData, setViewData] = useState(false)
+
+  const [editData, setEditData] = useState(false)
+
+  const [deleteData, setDeleteData] = useState(false)
+
+ const handleView = () =>
+  {
+    setViewData(true)
+  }
+
+const handleEdit = () =>
+{
+   setEditData(true)
 }
 
-const rows = [
-  createData('1','Ecommerce', 'Megha','15/03/25','13/04/25','High','Complete',),
-  createData('2','Inventory', 'Anjali','16/03/25','17/04/25','Medium','Complete',),
-  createData('3','Mobile App', 'Kavita','17/03/25','18/04/25','Law','On Hold',),
-  createData('4','Learning', 'Neha','18/03/25','19/04/25','High','On Hold',),
-  createData('5','Media', 'Sonal','14/03/25','16/04/25','High','Complete',),
-  
-  
-  ];
+const handleDelete = () =>
+  {
+    setDeleteData(true)
+  }
 
-export default function StickyHeadTable() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const columns = [
+        { id: 'si', label: 'SI. No', flex:1, align:'center' },
+        { id: 'projectTitle', label: 'Project Title', flex:1,align:'center' },
+        {
+          id: 'assignee',
+          label: 'Assignee',
+          flex:1,
+          align:'center'
+        },
+        {
+          id: 'startDate',
+          label: 'Start Date',
+          flex:1,
+           align:'center'
+        },
+        {
+          id: 'endDate',
+          label: 'End Date',
+          flex:1,
+          align:'center',
+        },
+        {
+          id: 'priority',
+          label: 'Priority',
+          flex:1,
+          align:'center',
+        },
+          {
+            id: 'status',
+            label: 'Status',
+            flex:1,
+            align:'center',
+          },
+          {
+            id: 'actions',
+            label: 'Action',
+            flex:1,
+            align:'center',
+          },
+      ];
+      
+      function createData(si, projectTitle, assignee, startDate, endDate, priority, status) {
+        return {
+          si,
+          projectTitle,
+          assignee,
+          startDate,
+          endDate,
+          priority,
+          status,
+          actions: (
+            <>
+              <IconButton style={{color:"#000", padding:"4px", transform:"scale(0.8)"}} onClick={handleView}>
+                <VisibilityIcon  />
+              </IconButton>
+              <IconButton style={{color:"#000", padding:"4px",transform:"scale(0.8)"}} onClick={handleEdit} >
+                <EditIcon />
+              </IconButton>
+              <IconButton style={{color:"#000", padding:"4px",transform:"scale(0.8)"}} onClick={handleDelete}>
+                <DeleteIcon />
+              </IconButton>
+            </>
+          ),
+        };
+      }
+      
+      const rows = [
+        createData(1, "Ecommerce", "Kavita", "2024-03-01", "2024-03-31","low", "Active"),
+        
+      ];
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  return (
-    <Box>
-      <Search/>
+      const [page, setPage] = useState(0);
+      const [rowsPerPage, setRowsPerPage] = useState(10);
     
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+      };
+    
+      const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+      };
+
+      const onAddClick =()=>
+        {
+          setOpenData(true)
+        }
+   
+        const handleClose = () => {
+          setEditData(false)
+          setViewData(false)
+          setOpenData(false)
+          setDeleteData(false)
+       };
+   
+       const handleSubmit = (e) => {
+         e.preventDefault();
+         setOpenData(false)
+         // console.log("Form Data Submitted:", formData);
+       }
+
+       const handleUpdate = (e) => {
+          e.preventDefault();
+          setEditData(false)
+       }
+  
+
+    return (
+      
+      <Box className="container">
+        <Search onAddClick={onAddClick}/>
+     <Paper sx={{ width: '100%', overflow:"hidden" }}>
+      <TableContainer  >
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -95,7 +184,7 @@ export default function StickyHeadTable() {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{ minWidth: column.minWidth, fontWeight:900 }}
                 >
                   {column.label}
                 </TableCell>
@@ -134,6 +223,27 @@ export default function StickyHeadTable() {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
+   
+     <CommonDialog 
+      open={openData || viewData || editData || deleteData} 
+      onClose={handleClose}
+      dialogTitle={ <>
+         {openData? "Create New Task" : viewData ? "View Task Details": editData?"Edit Task Details":deleteData?"Delete Task":null}
+      </>}
+      
+      dialogContent = {
+         openData ? <CreateTask handleSubmit={handleSubmit} handleClose={handleClose} /> :
+          viewData ? <ViewTask /> : 
+         editData ? <EditTask handleUpdate={handleUpdate} handleClose={handleClose} /> : 
+         deleteData? <DeleteTask handleDelete={handleDelete} handleClose={handleClose} />:null
+        
+      }
+
+      />
+
+      
     </Box>
-  );
+    )
 }
+
+export default Task;
