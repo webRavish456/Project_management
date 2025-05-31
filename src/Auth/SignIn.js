@@ -70,6 +70,12 @@ const SignIn = () => {
             reset();
           }, 1500);
 
+          const expiryDate = new Date(res.expiresAt); 
+          const now = new Date();
+          const maxAgeSeconds = Math.floor((expiryDate - now) / 1000);
+
+           localStorage.setItem("maxAge", maxAgeSeconds);
+
          localStorage.setItem("token", res.access_token);
 
         }
