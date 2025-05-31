@@ -47,7 +47,9 @@ const Finance=()=>
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const token = Cookies.get("token");
+  const [filteredRows, setFilteredRows]=useState([]);
+
+   const token= localStorage.getItem("token");
   const Base_url = process.env.REACT_APP_BASE_URL;
 
     const columns = [
@@ -121,12 +123,13 @@ const Finance=()=>
           item.TransactionType,
           item.Category,
           item.PaymentMode,
-          item.TransactionDate, 
+          new Date(item.TransactionDate).toLocaleDateString("en-IN"),
           item.Status,
     
             )
           );
           setRows(formattedData);
+          setFilteredRows(formattedData);
         }
       } catch (error) {
         console.error("Error fetching Finance data:", error);
@@ -221,38 +224,31 @@ const Finance=()=>
     setDeleteShow(false);
   };
 
-  const handleCreate = (refresh = true) => {
-    if (refresh) setLoading(true);
-    setOpenData(false);
+  const handleCreate = (data) => {
+     setLoading(data);
+     setOpenData(false);
   };
 
-  const handleUpdate = (refresh = true) => {
-    if (refresh) setLoading(true);
+  const handleUpdate = (data) => {
+     setLoading(data);
     setEditShow(false);
   };
 
   const onAddClick = () => setOpenData(true);
 
-  const handleSearch = (value) => {
-    setSearchTerm(value);
-  };
 
-   // 🔍 Filtered rows based on search input
-   const filteredRows = rows.filter((row) => {
-    if (!searchTerm) return true;
-    
-    const searchValue = searchTerm.toLowerCase();
-
-
-    return (
-      row.name?.toLowerCase().includes(searchValue) ||
-      row.TransactionDate?.toLowerCase().includes(searchValue) ||
-      row.PaymentMode?.toLowerCase().includes(searchValue) ||
-      row.Status?.toLowerCase().includes(searchValue)||
-      row.TransactionType?.toString().includes(searchValue)
-    );
-  }
- );
+   useEffect(() => {
+     
+       const filtered = rows.filter(
+         (row) =>
+           row.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           String(row.TransactionDate).includes(searchTerm.toLowerCase()) ||
+           row.PaymentMode?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           row.TransactionType?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           row.Status.toLowerCase().includes(searchTerm.toLowerCase()) 
+       );
+       setFilteredRows(filtered);
+     }, [searchTerm, rows]);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -267,7 +263,7 @@ const Finance=()=>
     <>
       <ToastContainer />
       <Box className="container">
-        <Search onAddClick={onAddClick} ButtonText="Add finance" searchTerm={searchTerm}
+        <Search onAddClick={onAddClick} buttonText="Add finance" searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}/>
      <Paper sx={{ width: '100%', overflow:"hidden" }}>
       <TableContainer sx={{ maxHeight: 440, overflowY: 'auto', overflowX:'auto' }}>

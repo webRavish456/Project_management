@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route,  Navigate } from "react-router-dom";
 import SignIn from "./Auth/SignIn";
 import Forgot from "./Auth/Forgot";
 import LayoutMain from "./Layout/LayoutMain";
@@ -14,6 +14,7 @@ import MeetingSchedule from "./MeetingSchedule/MeetingSchedule";
 
 import Header from "./Component/Header/Header";
 import Profile from "./Profile/Profile";
+import ProtectedRoute from "./Component/ProtectedRoute/ProtectedRoute";
 //import Profile from "./Pages/Profile/Profile";
 
 
@@ -28,7 +29,12 @@ function App() {
         <Route path="/login" element={<SignIn />}/>
         <Route path="/forgot" element={<Forgot />}/>
 
-        <Route path="/" element={<LayoutMain/>}>
+        <Route path="/" element={ <ProtectedRoute>
+              <LayoutMain />
+         </ProtectedRoute>}>
+
+         <Route index element={<Navigate to="/dashboard" replace />} />
+
         <Route path="dashboard" element={<Dashboard/>}/>
         <Route path="project" element={<Project/>}/>
         <Route path="leads" element={<Leads/>}/>

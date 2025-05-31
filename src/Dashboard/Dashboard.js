@@ -13,7 +13,7 @@ const Dashboard = () => {
 
     const [loading, setLoading] = useState(true)
 
-    const token = Cookies.get("token");
+   const token= localStorage.getItem("token");
     const Base_url = process.env.REACT_APP_BASE_URL;
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const Dashboard = () => {
 
             if (projectRes.status === "success") {
               const projectData = projectRes.data.reduce((acc, item) => {
-                acc[item.status] = (acc[item.status] || 0) + 1;
+                acc[item.Status] = (acc[item.Status] || 0) + 1;
                 return acc;
               }, {});
               setProjectStatus(Object.entries(projectData).map(([name, value]) => ({ name, value })));

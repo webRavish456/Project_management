@@ -35,7 +35,7 @@ import Cookies from 'js-cookie';
 const CreateProject =({handleCreate, handleClose})=>
 {
   const isSmScreen = useMediaQuery("(max-width:768px)");
-    const token = Cookies.get('token');
+      const token= localStorage.getItem("token");
 
     const Base_url = process.env.REACT_APP_BASE_URL;
   
@@ -224,7 +224,7 @@ const CreateProject =({handleCreate, handleClose})=>
             </div>
           </Grid>
 
-          < Grid item xs={12} sm={isSmScreen?12:6} md={6}>
+          < Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth margin="normal" error={!!errors.Status}>
               <InputLabel id="Status-label">
                 Status<span style={{ color: "rgba(240, 68, 56, 1)" }}>*</span>
@@ -238,7 +238,7 @@ const CreateProject =({handleCreate, handleClose})=>
               >
                 <MenuItem value="complete">Complete</MenuItem>
                 <MenuItem value="active">Active</MenuItem>
-                <MenuItem value="uncomplete">Uncomplete</MenuItem>
+                <MenuItem value="incomplete">Incomplete</MenuItem>
               </Select>
               <FormHelperText>{errors.Status?.message}</FormHelperText>
             </FormControl>

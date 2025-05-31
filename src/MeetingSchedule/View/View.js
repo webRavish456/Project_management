@@ -48,7 +48,7 @@ const ViewMeetingSchedule = ({viewData})=>
               <Box className="pageTitle">Meeting Date:</Box>    
               </Grid>
               <Grid item xs={6}>
-          <Box className="pageDescription">{viewData.meetingDate}</Box>
+          <Box className="pageDescription">{new Date(viewData.meetingDate).toLocaleDateString("en-IN")}</Box>
             </Grid>
               </Grid>
 

@@ -31,7 +31,7 @@ import Cookies from 'js-cookie';
 const CreateMeeting =({handleCreate, handleClose})=>
 {
     const isSmScreen = useMediaQuery("(max-width:768px)");
-    const token = Cookies.get('token');
+     const token= localStorage.getItem("token");
 
     const Base_url = process.env.REACT_APP_BASE_URL;
   
@@ -234,7 +234,7 @@ const CreateMeeting =({handleCreate, handleClose})=>
               >
                 <MenuItem value="complete">Complete</MenuItem>
                 <MenuItem value="active">Active</MenuItem>
-                <MenuItem value="uncomplete">Uncomplete</MenuItem>
+                <MenuItem value="incomplete">Incomplete</MenuItem>
               </Select>
               <FormHelperText>{errors.status?.message}</FormHelperText>
             </FormControl>

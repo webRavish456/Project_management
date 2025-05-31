@@ -34,7 +34,7 @@ const EditTask = ({ handleUpdate,  editData,  handleClose }) => {
 
           const isSmScreen = useMediaQuery("(max-width:768px)");
 
-  const token = Cookies.get('token');
+  const token= localStorage.getItem("token");
 
   const Base_url = process.env.REACT_APP_BASE_URL;
 
@@ -54,8 +54,8 @@ const EditTask = ({ handleUpdate,  editData,  handleClose }) => {
       reset({
         taskTitle: editData.taskTitle || "",
         taskAssignee: editData.taskAssignee || "",
-        taskStartDate: editData.taskStartDate || "",
-        taskEndDate: editData.taskEndDate || "",
+        taskStartDate: editData.taskStartDate ? new Date(editData.taskStartDate).toISOString().split("T")[0] : "",
+        taskEndDate: editData.taskEndDate ? new Date(editData.taskEndDate).toISOString().split("T")[0] : "",
         taskPriority: editData.taskPriority || "",
         taskStatus: editData.taskstatus || "",
       });
@@ -230,7 +230,7 @@ const EditTask = ({ handleUpdate,  editData,  handleClose }) => {
                                             labelId="taskPriority-label"
                                             id="taskPriority"
                                             label="taskPriority"
-                                            defaultValue=""
+                                            defaultValue={editData.taskPriority}
                                             {...register("taskPriority")}
                                           >
                                             <MenuItem value="low">low</MenuItem>
@@ -269,13 +269,12 @@ const EditTask = ({ handleUpdate,  editData,  handleClose }) => {
                                     <Select
                                       labelId="taskStatus-label"
                                       id="taskStatus"
-                                      label="taskStatus"
-                                      defaultValue=""
+                                      defaultValue={editData.taskStatus}
                                       {...register("taskStatus")}
                                     >
                                       <MenuItem value="complete">Complete</MenuItem>
                                       <MenuItem value="active">Active</MenuItem>
-                                      <MenuItem value="uncomplete">Uncomplete</MenuItem>
+                                      <MenuItem value="incomplete">Incomplete</MenuItem>
                                     </Select>
                                     <FormHelperText>{errors.taskStatus?.message}</FormHelperText>
                                   </FormControl>

@@ -61,7 +61,7 @@ const SignIn = () => {
             reset();
           }, 1500);
 
-          document.cookie = `token=${res.access_token}; path=/; max-age=${res.expiresAt}; SameSite=Strict`;
+         localStorage.setItem("token", res.access_token);
 
         }
         else {

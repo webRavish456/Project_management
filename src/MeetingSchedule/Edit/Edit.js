@@ -30,7 +30,7 @@ const schema = yup.object().shape({
 const EditMeeting = ({ handleUpdate,  editData,  handleClose }) => {
 
   const isSmScreen = useMediaQuery("(max-width:768px)");
-  const token = Cookies.get('token');
+  const token= localStorage.getItem("token");
 
   const Base_url = process.env.REACT_APP_BASE_URL;
 
@@ -51,7 +51,7 @@ const EditMeeting = ({ handleUpdate,  editData,  handleClose }) => {
          projectTitle: editData.projectTitle || "",
          description: editData.description|| "",
          scheduledby: editData.scheduledby || "",
-         meetingDate: editData.meetingDate || "",
+         meetingDate: editData.meetingDate ? new Date(editData.meetingDate).toISOString().split("T")[0] : "",
          duration: editData.duration || "",
         status: editData.status || "",
       });
@@ -64,11 +64,11 @@ const EditMeeting = ({ handleUpdate,  editData,  handleClose }) => {
          setLoading(true)
 
         const formdata = new FormData();
-        formdata.append(" projectTitle", data.projectTitle);
-        formdata.append(" description", data.description);
-        formdata.append(" scheduledby", data.scheduledby);
-        formdata.append(" meetingDate", data.meetingDate);
-        formdata.append(" duration", data.duration);
+        formdata.append("projectTitle", data.projectTitle);
+        formdata.append("description", data.description);
+        formdata.append("scheduledby", data.scheduledby);
+        formdata.append("meetingDate", data.meetingDate);
+        formdata.append("duration", data.duration);
         formdata.append("status", data.status);
     
         const requestOptions = {
@@ -159,8 +159,8 @@ const EditMeeting = ({ handleUpdate,  editData,  handleClose }) => {
                        </>
                      }
                      variant="outlined"
-                     {...register(" scheduledby")}
-                     error={!!errors. scheduledby}
+                     {...register("scheduledby")}
+                     error={!!errors.scheduledby}
                    
                      
                      fullWidth
@@ -192,9 +192,6 @@ const EditMeeting = ({ handleUpdate,  editData,  handleClose }) => {
                    </div>
                  </Grid>
        
-        
-        
-       
                  <Grid item xs={12} sm={isSmScreen?12:6} md={6}>
                    <TextField
                      type="String"
@@ -223,7 +220,7 @@ const EditMeeting = ({ handleUpdate,  editData,  handleClose }) => {
                 labelId="status-label"
                 id="status"
                 label="status"
-                defaultValue=""
+                defaultValue={editData.status}
                 {...register("status")}
               >
                 <MenuItem value="complete">Complete</MenuItem>

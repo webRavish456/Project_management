@@ -73,7 +73,7 @@ const ViewLeads =({viewData})=>
             </Grid>
 
             <Grid item xs={6}>
-            <Box className="pageDescription">Active</Box>
+            <Box className="pageDescription">{viewData.status}</Box>
             </Grid>
 
             </Grid>

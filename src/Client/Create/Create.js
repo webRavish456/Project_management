@@ -33,8 +33,7 @@ const CreateClient =({handleCreate, handleClose})=>
 {
     
     const isSmScreen = useMediaQuery("(max-width:768px)");
-    const token = Cookies.get('token');
-
+   const token= localStorage.getItem("token");
     const Base_url = process.env.REACT_APP_BASE_URL;
   
     const [loading, setLoading] = useState(false)
@@ -216,9 +215,9 @@ const CreateClient =({handleCreate, handleClose})=>
                 {/* <Button variant="contained" size="small" sx={{ mt: 1 }}>
                 Complete
               </Button> */}
-                <MenuItem value="complete">Complete</MenuItem>
+        
                 <MenuItem value="active">Active</MenuItem>
-                <MenuItem value="uncomplete">Uncomplete</MenuItem>
+                <MenuItem value="in-active">In-active</MenuItem>
               </Select>
               <FormHelperText>{errors.status?.message}</FormHelperText>
             </FormControl>

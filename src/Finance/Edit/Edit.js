@@ -28,13 +28,13 @@ const schema = yup.object().shape({
   Category: yup.string().required("leads Name is required"),
   PaymentMode: yup.string().required("leads Name is required"),
   TransactionDate: yup.string().required("email is required"),
-  //Status: yup.string()
+  Status: yup.string()
 });
 
 const EditFinance = ({ handleUpdate,  editData,  handleClose }) => {
 
   const isSmScreen = useMediaQuery("(max-width:768px)");
-  const token = Cookies.get('token');
+  const token= localStorage.getItem("token");
 
   const Base_url = process.env.REACT_APP_BASE_URL;
 
@@ -57,7 +57,7 @@ const EditFinance = ({ handleUpdate,  editData,  handleClose }) => {
         TransactionType: editData.TransactionType || "",
         Category: editData.Category || "",
         PaymentMode: editData.PaymentMode || "",
-        TransactionDate: editData.TransactionDate || "",
+        TransactionDate: editData.TransactionDate? new Date(editData.TransactionDate).toISOString().split("T")[0] : "",
         Status: editData.Status || "",
       });
     }
@@ -205,7 +205,7 @@ const EditFinance = ({ handleUpdate,  editData,  handleClose }) => {
                                 labelId="PaymentMode"
                                 id="PaymentMode"
                                 label="PaymentMode"
-                                defaultValue=""
+                                defaultValue={editData.PaymentMode}
                                 {...register("PaymentMode")}
                               >  
                                 <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
@@ -259,7 +259,7 @@ const EditFinance = ({ handleUpdate,  editData,  handleClose }) => {
                    </div>
                  </Grid>
 
-                 < Grid item xs={12} sm={isSmScreen?12:6} md={6}>
+                 < Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth margin="normal" error={!!errors.taskStatus}>
               <InputLabel id="Status">
                 Status<span style={{ color: "rgba(240, 68, 56, 1)" }}>*</span>
@@ -268,12 +268,13 @@ const EditFinance = ({ handleUpdate,  editData,  handleClose }) => {
                 labelId="Status"
                 id="Status"
                 label="Status"
-                defaultValue=""
+                defaultValue={editData.Status}
                 {...register("Status")}
               >
-                <MenuItem value="complete">Complete</MenuItem>
-                <MenuItem value="active">Active</MenuItem>
-                <MenuItem value="Incomplete">Incomplete</MenuItem>
+             <MenuItem value="Complete">Complete</MenuItem>
+              <MenuItem value="Active">Active</MenuItem>
+              <MenuItem value="Incomplete">Incomplete</MenuItem>
+              
               </Select>
               <FormHelperText>{errors.Status?.message}</FormHelperText>
             </FormControl>

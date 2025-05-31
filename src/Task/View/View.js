@@ -38,7 +38,7 @@ const ViewTask =({viewData})=>
               <Box className="pageTitle">TaskStartDate:</Box>    
               </Grid>
               <Grid item xs={6}>
-          <Box className="pageDescription">{viewData.taskStartDate}</Box>
+          <Box className="pageDescription">{new Date(viewData.taskStartDate).toLocaleDateString("en-IN")}</Box>
             </Grid>
               </Grid>
 
@@ -48,7 +48,7 @@ const ViewTask =({viewData})=>
               <Box className="pageTitle">TaskEndDate:</Box>    
               </Grid>
               <Grid item xs={6}>
-          <Box className="pageDescription">{viewData.taskEndDate}</Box>
+          <Box className="pageDescription">{new Date(viewData.taskEndDate).toLocaleDateString("en-IN")}</Box>
             </Grid>
               </Grid>
 

@@ -38,7 +38,7 @@ const ViewProject =({viewData})=>
               <Box className="pageTitle">StartDate:</Box>    
               </Grid>
               <Grid item xs={6}>
-          <Box className="pageDescription">{viewData.StartDate}</Box>
+          <Box className="pageDescription">{new Date(viewData.StartDate).toLocaleDateString("en-IN")}</Box>
             </Grid>
               </Grid>
 
@@ -48,7 +48,7 @@ const ViewProject =({viewData})=>
               <Box className="pageTitle">EndDate:</Box>    
               </Grid>
               <Grid item xs={6}>
-          <Box className="pageDescription">{viewData.EndDate}</Box>
+          <Box className="pageDescription">{new Date(viewData.EndDate).toLocaleDateString("en-IN")}</Box>
             </Grid>
               </Grid>
 

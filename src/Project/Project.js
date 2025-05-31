@@ -40,11 +40,14 @@ const Project = () => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [rows, setRows] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
   const [searchTerm, setSearchTerm] = useState(""); 
 
-  const token = Cookies.get("token");
+  const [filteredRows, setFilteredRows]=useState([]);
+
+  const token= localStorage.getItem("token");
   const Base_url = process.env.REACT_APP_BASE_URL;
 
   const columns = [
@@ -80,14 +83,15 @@ const Project = () => {
               item,
               item.ProjectName,
               item.ProjectDescription,
-              item.StartDate,
-              item.EndDate,
+              new Date(item.StartDate).toLocaleDateString("en-IN"),
+              new Date(item.EndDate).toLocaleDateString("en-IN"),
               item.Priority,
               item.Budget,
-              item.status
+              item.Status
             )
           );
           setRows(formattedData);
+          setFilteredRows(formattedData);
         }
       } catch (error) {
         console.error("Error fetching Project data:", error);
@@ -185,13 +189,13 @@ const Project = () => {
     setDeleteShow(false);
   };
 
-  const handleCreate = (refresh = true) => {
-    if (refresh) setLoading(true);
-    setOpenData(false);
+  const handleCreate = (data) => {
+     setLoading(data);
+     setOpenData(false);
   };
 
-  const handleUpdate = (refresh = true) => {
-    if (refresh) setLoading(true);
+  const handleUpdate = (data) => {
+     setLoading(data);
     setEditShow(false);
   };
 
@@ -201,17 +205,18 @@ const Project = () => {
     setSearchTerm(value);
   };
 
-   const filteredRows = rows.filter((row) => {
-    if (!searchTerm) return true;
-    
-    const searchValue = searchTerm.toLowerCase();
-    return (
-      row.ProjectName?.toLowerCase().includes(searchValue) ||
-      row.Priority?.toLowerCase().includes(searchValue) ||
-      row.Status?.toLowerCase().includes(searchValue) 
-    );
-  }
- );
+useEffect(() => {
+
+  const filtered = rows.filter(
+    (row) =>
+      row.ProjectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.Priority.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.Status.toLowerCase().includes(searchTerm.toLowerCase()) 
+  );
+  setFilteredRows(filtered);
+}, [searchTerm, rows]); 
+
+
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -246,17 +251,27 @@ const Project = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredRows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, idx) => (
-                    <TableRow hover role="checkbox" key={idx}>
-                      {columns.map((column) => (
-                        <TableCell key={column.id} align={column.align}>
-                          {row[column.id]}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
+                {filteredRows.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={columns.length} align="center">
+                      No records found
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  <>
+                 {filteredRows
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((row, idx) => (
+                          <TableRow hover role="checkbox" key={idx}>
+                            {columns.map((column) => (
+                              <TableCell key={column.id} align={column.align}>
+                                {row[column.id]}
+                              </TableCell>
+                            ))}
+                          </TableRow>
+                        ))}
+                      </>
+          )}
               </TableBody>
             </Table>
           </TableContainer>

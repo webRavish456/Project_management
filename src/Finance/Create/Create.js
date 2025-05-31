@@ -35,7 +35,7 @@ const schema = yup.object().shape({
 
 const CreateFinance =({handleCreate, handleClose})=>
 {   
-    const token = Cookies.get('token');
+     const token= localStorage.getItem("token");
 
     const Base_url = process.env.REACT_APP_BASE_URL;
 
@@ -230,7 +230,7 @@ const CreateFinance =({handleCreate, handleClose})=>
             />
             </Grid>
 
-< Grid item xs={12} sm={isSmScreen?12:6} md={6}>
+     <Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth margin="normal" error={!!errors.Status}>
               <InputLabel id="Status">
                 Status<span style={{ color: "rgba(240, 68, 56, 1)" }}>*</span>

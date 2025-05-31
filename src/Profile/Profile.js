@@ -74,7 +74,7 @@ const Profile = () => {
      setEditShow(false);
   }
 
-  const token = Cookies.get("token");
+  const token= localStorage.getItem("token");
   const Base_url = process.env.REACT_APP_BASE_URL;
 
 
@@ -117,8 +117,6 @@ const Profile = () => {
             address: res.data.address,
             });        
         }
-
-         res.status==="error" && localStorage.clear()
 
         setLoading(false);
 

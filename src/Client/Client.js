@@ -40,9 +40,11 @@ const Client = () => {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
-   const [searchTerm, setSearchTerm] = useState(""); // 🔍 search state added
+   const [searchTerm, setSearchTerm] = useState(""); 
 
-  const token = Cookies.get("token");
+   const [filteredRows, setFilteredRows]=useState([]);
+
+    const token= localStorage.getItem("token");
   const Base_url = process.env.REACT_APP_BASE_URL;
 
   const columns = [
@@ -84,6 +86,7 @@ const Client = () => {
             )
           );
           setRows(formattedData);
+          setFilteredRows(formattedData);
         }
       } catch (error) {
         console.error("Error fetching client data:", error);
@@ -176,14 +179,14 @@ const Client = () => {
     setDeleteShow(false);
   };
 
-  const handleCreate = (refresh = true) => {
-    if (refresh) setLoading(true);
+  const handleCreate = (data) => {
+    setLoading(data);
     setOpenData(false);
   };
 
-  const handleUpdate = (refresh = true) => {
-    if (refresh) setLoading(true);
-    setEditShow(false);
+  const handleUpdate = (data) => {
+     setLoading(data);
+     setEditShow(false);
   };
 
   const onAddClick = () => setOpenData(true);
@@ -193,20 +196,21 @@ const Client = () => {
     setSearchTerm(value);
   };
 
-   // 🔍 Filtered rows based on search input
-   const filteredRows = rows.filter((row) => {
-    if (!searchTerm) return true;
-    
-    const searchValue = searchTerm.toLowerCase();
-    return (
-      row.name?.toLowerCase().includes(searchValue) ||
-      row.email?.toLowerCase().includes(searchValue) ||
-      row.companyName?.toLowerCase().includes(searchValue) ||
-      row.status?.toLowerCase().includes(searchValue) ||
-      row.mobileNo?.toString().includes(searchValue)
-    );
-  }
- );
+
+
+    useEffect(() => {
+     
+       const filtered = rows.filter(
+         (row) =>
+           row.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           String(row.email).includes(searchTerm.toLowerCase()) ||
+           String(row.mobileNo).includes(searchTerm.toLowerCase()) ||
+           row.companyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           row.status.toLowerCase().includes(searchTerm.toLowerCase()) 
+       );
+       setFilteredRows(filtered);
+     }, [searchTerm, rows]); 
+
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -221,7 +225,7 @@ const Client = () => {
     <>
       <ToastContainer />
       <Box className="container">
-        <Search onAddClick={onAddClick} buttonText="+ Add Client"
+        <Search onAddClick={onAddClick} buttonText="Add Client"
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}  />
         <Paper sx={{ width: "100%", overflow: "hidden" }}>

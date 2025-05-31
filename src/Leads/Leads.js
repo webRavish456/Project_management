@@ -43,10 +43,10 @@ const Leads = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   
-
+  const [filteredRows, setFilteredRows]=useState([]);
   
 
-  const token = Cookies.get("token");
+  const token= localStorage.getItem("token");
   const Base_url = process.env.REACT_APP_BASE_URL;
 
   const columns = [
@@ -88,6 +88,7 @@ const Leads = () => {
             )
           );
           setRows(formattedData);
+          setFilteredRows(formattedData);
         }
       } catch (error) {
         console.error("Error fetching Leads data:", error);
@@ -133,7 +134,7 @@ const Leads = () => {
   });
 
   const handleView = (row) => {
-    console.log("row",row)
+
     setViewData(row);
     setViewShow(true);
   };
@@ -183,13 +184,13 @@ const Leads = () => {
     setDeleteShow(false);
   };
 
-  const handleCreate = (refresh = true) => {
-    if (refresh) setLoading(true);
+  const handleCreate = (data) => {
+    setLoading(data);
     setOpenData(false);
   };
 
-  const handleUpdate = (refresh = true) => {
-    if (refresh) setLoading(true);
+  const handleUpdate = (data) => {
+    setLoading(data);
     setEditShow(false);
   };
 
@@ -198,32 +199,25 @@ const Leads = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const filteredRows = rows.filter((row) => {
-    if (!searchTerm) return true;
+
+   useEffect(() => {
     
-    const searchValue = searchTerm.toLowerCase();
-    return (
-      row.leadsName?.toLowerCase().includes(searchValue) ||
-      
-      row.email?.toLowerCase().includes(searchValue) ||
-      row.mobileNo?.toLowerCase().includes(searchValue) ||
-      row.status?.toLowerCase().includes(searchValue) ||
-      row.source?.toLowerCase().includes(searchValue) 
-      
-    );
-  });
+      const filtered = rows.filter(
+        (row) =>
+          row.leadsName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          String(row.email).includes(searchTerm.toLowerCase()) ||
+          String(row.mobileNo).includes(searchTerm.toLowerCase()) ||
+          row.source?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          row.status.toLowerCase().includes(searchTerm.toLowerCase()) 
+      );
+      setFilteredRows(filtered);
+    }, [searchTerm, rows]); 
+
 
   const handleChangePage = (_, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (e) => {
     setRowsPerPage(+e.target.value);
     setPage(0);
-
-
-    const filteredRows = searchTerm.trim() === ""
-  ? rows
-  : rows.filter((row) =>
-      row.leadsName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
 
   };
 
@@ -231,7 +225,7 @@ const Leads = () => {
     <>
       <ToastContainer />
       <Box className="container">
-        <Search searchTerm={searchTerm}  setSearchTerm={setSearchTerm} onAddClick={onAddClick} buttonText=" + Add Leads" />
+        <Search searchTerm={searchTerm}  setSearchTerm={setSearchTerm} onAddClick={onAddClick} buttonText="Add Leads" />
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 440 }}>
             <Table stickyHeader aria-label="branch table">

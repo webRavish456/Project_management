@@ -31,7 +31,7 @@ import Cookies from 'js-cookie';
 const CreateLeads =({handleCreate, handleClose})=>
 {
     const isSmScreen = useMediaQuery("(max-width:768px)");
-    const token = Cookies.get('token');
+    const token= localStorage.getItem("token");
 
     const Base_url = process.env.REACT_APP_BASE_URL;
   
@@ -193,9 +193,9 @@ const CreateLeads =({handleCreate, handleClose})=>
                                          defaultValue=""
                                          {...register("source")}
                                        >
-                                         <MenuItem value="complete">Webside</MenuItem>
-                                         <MenuItem value="active">Social Media</MenuItem>
-                                         <MenuItem value="uncomplete">Referral</MenuItem>
+                                         <MenuItem value="website">Website</MenuItem>
+                                         <MenuItem value="social-media">Social Media</MenuItem>
+                                         <MenuItem value="referral">Referral</MenuItem>
                                        </Select>
                                        <FormHelperText>{errors.source?.message}</FormHelperText>
                                      </FormControl>
@@ -214,9 +214,9 @@ const CreateLeads =({handleCreate, handleClose})=>
                 defaultValue=""
                 {...register("status")}
               >
-                <MenuItem value="complete">Complete</MenuItem>
+               
                 <MenuItem value="active">Active</MenuItem>
-                <MenuItem value="uncomplete">Uncomplete</MenuItem>
+                <MenuItem value="in-active">In-active</MenuItem>
               </Select>
               <FormHelperText>{errors.status?.message}</FormHelperText>
             </FormControl>

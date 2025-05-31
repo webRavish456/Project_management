@@ -72,7 +72,7 @@ const ViewFinance =({viewData})=>
             </Grid>
 
             <Grid item xs={6}>
-            <Box className="pageDescription">{viewData.TransactionDate}</Box>
+            <Box className="pageDescription">{new Date(viewData.TransactionDate).toLocaleDateString("en-IN")}</Box>
             </Grid>
 
             </Grid>

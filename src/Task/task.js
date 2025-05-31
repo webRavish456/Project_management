@@ -39,6 +39,8 @@ const Task = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
+    const [filteredRows, setFilteredRows]=useState([]);
+
   // const [rows, setRows] = useState([]);
   // const [filteredRows]=useState([]);
   // const [loading, setLoading] = useState(true);
@@ -50,7 +52,7 @@ const Task = () => {
   const [searchTerm, setSearchTerm] = useState("");// 2
 
 
-  const token = Cookies.get("token");
+  const token= localStorage.getItem("token");
   const Base_url = process.env.REACT_APP_BASE_URL;
 
   const columns = [
@@ -85,15 +87,15 @@ const Task = () => {
               item,
               item.taskTitle,
               item.taskAssignee,
-              item.taskStartDate,
-              item.taskEndDate,
+              new Date(item.taskStartDate).toLocaleDateString("en-IN"),
+              new Date(item.taskEndDate).toLocaleDateString("en-IN"),
               item.taskPriority,
               item.taskStatus
             )
           );
           setRows(formattedData);
           // setRows(formattedData);
-          // setFilteredRows(formattedData); // Initialize filteredRows with all data // 4
+           setFilteredRows(formattedData); // Initialize filteredRows with all data // 4
         }
       } catch (error) {
         console.error("Error fetching task data:", error);
@@ -139,14 +141,16 @@ const Task = () => {
   });
 
 
-  // useEffect(() => {
-  //   const filtered = rows.filter(
-  //     (row) =>
-  //       row.taskTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //       row.taskAssignee.toLowerCase().includes(searchTerm.toLowerCase())
-  //   );
-  //   setFilteredRows(filtered);
-  // }, [searchTerm, rows]); // Dependencies ensure filtering happens dynamically 6
+  useEffect(() => {
+    const filtered = rows.filter(
+      (row) =>
+        row.taskTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        row.taskAssignee.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        row.taskPriority?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        row.taskStatus?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredRows(filtered);
+  }, [searchTerm, rows]); 
 
 
   const handleView = (row) => {
@@ -200,31 +204,17 @@ const Task = () => {
     setDeleteShow(false);
   };
 
-  const handleCreate = (refresh = true) => {
-    if (refresh) setLoading(true);
+  const handleCreate = (data) => {
+     setLoading(data);
     setOpenData(false);
   };
 
-  const handleUpdate = (refresh = true) => {
-    if (refresh) setLoading(true);
-    setEditShow(false);
+  const handleUpdate = (data) => {
+     setLoading(data);
+     setEditShow(false);
   };
 
   const onAddClick = () => setOpenData(true);
-
-  const filteredRows = rows.filter((row) => {
-    if (!searchTerm) return true;
-    
-    const searchValue = searchTerm.toLowerCase();
-    return (
-      row.taskTitle?.toLowerCase().includes(searchValue) ||
-      // row.ProjectDescription?.toLowerCase().includes(searchValue) ||
-      row.taskAssignee?.toLowerCase().includes(searchValue) ||
-      row.taskPriority?.toLowerCase().includes(searchValue) ||
-      row.taskStatus?.toLowerCase().includes(searchValue) 
-      // row.Budget?.toString().includes(searchValue)
-    );
-  });
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -266,7 +256,7 @@ const Task = () => {
               </TableHead>
               <TableBody>
                 {filteredRows.length > 0 ? (
-    filteredRows
+                 filteredRows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, idx) => (
                     <TableRow hover role="checkbox" key={idx}>

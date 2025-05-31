@@ -35,7 +35,7 @@ const EditProject = ({ handleUpdate,  editData,  handleClose }) => {
 
           const isSmScreen = useMediaQuery("(max-width:768px)");
 
-  const token = Cookies.get('token');
+  const token= localStorage.getItem("token");
 
   const Base_url = process.env.REACT_APP_BASE_URL;
 
@@ -55,8 +55,8 @@ const EditProject = ({ handleUpdate,  editData,  handleClose }) => {
       reset({
         ProjectName: editData.ProjectName || "",
         ProjectDescription: editData.ProjectDescription || "",
-        StartDate: editData.StartDate || "",
-        EndDate: editData.EndDate || "",
+        StartDate: editData.StartDate ? new Date(editData.StartDate).toISOString().split("T")[0] : "",
+        EndDate: editData.EndDate ? new Date(editData.EndDate).toISOString().split("T")[0] : "",
         Priority: editData.Priority || "",
         Budget: editData.Budget || "",
         Status: editData.Status || "",
@@ -252,7 +252,7 @@ const EditProject = ({ handleUpdate,  editData,  handleClose }) => {
             </div>
           </Grid>
 
-          <Grid item xs={12} sm={isSmScreen?12:6} md={6}> 
+          <Grid item xs={12} sm={12} md={12}> 
           <FormControl fullWidth margin="normal" error={!!errors.Status}>
               <InputLabel id="status-label">
                 Status<span style={{ color: "rgba(240, 68, 56, 1)" }}>*</span>
@@ -261,12 +261,12 @@ const EditProject = ({ handleUpdate,  editData,  handleClose }) => {
                 labelId="status-label"
                 id="status"
                 label="Status"
-                defaultValue=""
+                defaultValue={editData.Status}
                 {...register("status")}
               >
                 <MenuItem value="complete">Complete</MenuItem>
                 <MenuItem value="active">Active</MenuItem>
-                <MenuItem value="uncomplete">Uncomplete</MenuItem>
+                <MenuItem value="incomplete">Incomplete</MenuItem>
               </Select>
               <FormHelperText>{errors.Status?.message}</FormHelperText>
             </FormControl>

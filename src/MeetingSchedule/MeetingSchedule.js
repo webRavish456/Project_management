@@ -45,7 +45,11 @@ const Meeting = () => {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const token = Cookies.get("token");
+    const [searchTerm, setSearchTerm] = useState("");
+    
+      const [filteredRows, setFilteredRows]=useState([]);
+
+  const token= localStorage.getItem("token");
   const Base_url = process.env.REACT_APP_BASE_URL;
 
   const columns = [
@@ -73,7 +77,7 @@ const Meeting = () => {
         const res = JSON.parse(result);
 
         if (res.status === "success") {
-          setLoading(false);
+         
           const formattedData = res.data.map((item, index) =>
             createData(
               index + 1,
@@ -81,12 +85,14 @@ const Meeting = () => {
               item.projectTitle,
               item.description,
               item.scheduledby,
-              item.meetingDate,
+              new Date(item.meetingDate).toLocaleDateString("en-IN"),
               item.duration,
               item.status,
             )
           );
+          setLoading(false);
           setRows(formattedData);
+          setFilteredRows(formattedData);
         }
       } catch (error) {
         console.error("Error fetching Leads data:", error);
@@ -182,19 +188,32 @@ const Meeting = () => {
     setDeleteShow(false);
   };
 
-  const handleCreate = (refresh = true) => {
-    if (refresh) setLoading(true);
+  const handleCreate = (data) => {
+     setLoading(data);
     setOpenData(false);
   };
 
-  const handleUpdate = (refresh = true) => {
-    if (refresh) setLoading(true);
+  const handleUpdate = (data) => {
+     setLoading(data);
     setEditShow(false);
   };
 
   const onAddClick = () => setOpenData(true);
 
   const [page, setPage] = useState(0);
+
+  useEffect(() => {
+  
+    const filtered = rows.filter(
+      (row) =>
+        row.projectTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        row.scheduledby.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        row.status.toLowerCase().includes(searchTerm.toLowerCase()) 
+    );
+    setFilteredRows(filtered);
+  }, [searchTerm, rows]); 
+
+
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (_, newPage) => setPage(newPage);
@@ -207,7 +226,8 @@ const Meeting = () => {
     <>
       <ToastContainer />
       <Box className="container">
-        <Search onAddClick={onAddClick} buttonText=" + Add Meeting" />
+        <Search onAddClick={onAddClick} searchTerm={searchTerm}
+         setSearchTerm={setSearchTerm} buttonText="Add Meeting" />
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 440 }}>
             <Table stickyHeader aria-label="branch table">
@@ -225,7 +245,13 @@ const Meeting = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
+                {filteredRows.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={columns.length} align="center">
+                      No records found
+                    </TableCell>
+                  </TableRow>
+                   ) : (<>{filteredRows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, idx) => (
                     <TableRow hover role="checkbox" key={idx}>
@@ -236,6 +262,8 @@ const Meeting = () => {
                       ))}
                     </TableRow>
                   ))}
+                  </>
+              )}
               </TableBody>
             </Table>
           </TableContainer>

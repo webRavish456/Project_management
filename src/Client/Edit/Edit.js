@@ -33,7 +33,7 @@ const EditClient = ({ handleUpdate,  editData,  handleClose }) => {
 
           const isSmScreen = useMediaQuery("(max-width:768px)");
 
-  const token = Cookies.get('token');
+   const token= localStorage.getItem("token");
 
   const Base_url = process.env.REACT_APP_BASE_URL;
 
@@ -54,7 +54,7 @@ const EditClient = ({ handleUpdate,  editData,  handleClose }) => {
         name: editData.name || "",
        email: editData.email || "",
         mobileNo: editData.mobileNo || "",
-        address: editData.addres || "",
+        address: editData.address || "",
         companyName: editData.companyName || "",
         status: editData.status || "",
       });
@@ -221,12 +221,12 @@ const EditClient = ({ handleUpdate,  editData,  handleClose }) => {
                 labelId="status-label"
                 id="status"
                 label="Status"
-                defaultValue=""
+                defaultValue={editData.status}
                 {...register("status")}
               >
-                <MenuItem value="complete">Complete</MenuItem>
+          
                 <MenuItem value="active">Active</MenuItem>
-                <MenuItem value="uncomplete">Uncomplete</MenuItem>
+                <MenuItem value="in-active">In-active</MenuItem>
               </Select>
               <FormHelperText>{errors.status?.message}</FormHelperText>
             </FormControl>
