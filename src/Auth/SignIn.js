@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -25,6 +25,15 @@ const SignIn = () => {
   } = useForm({
     resolver: yupResolver(schema)
   });
+
+   useEffect(() => {
+
+   const token= localStorage.getItem("token");
+
+    if (token) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [navigate]);
 
   const Base_url = process.env.REACT_APP_BASE_URL;
 
