@@ -71,8 +71,7 @@ const SignIn = () => {
           }, 1500);
 
           const expiryDate = new Date(res.expiresAt); 
-          const now = new Date();
-          const maxAgeSeconds = Math.floor((expiryDate - now) / 1000);
+          const maxAgeSeconds = Math.floor((expiryDate) / 1000);
 
            localStorage.setItem("maxAge", maxAgeSeconds);
 

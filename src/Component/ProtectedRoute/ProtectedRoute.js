@@ -16,14 +16,16 @@ const ProtectedRoute = ({ children }) => {
 
     if (!token || !maxAge || now > expiry) {
 
-      localStorage.removeItem("token");
+     localStorage.removeItem("token");
       localStorage.removeItem("maxAge");
       navigate("/login", { replace: true });
-      
+
     }
   }, [token, maxAge, navigate]);
 
   const now = Math.floor(Date.now() / 1000);
+
+  console.log(now)
   const expiry = maxAge ? parseInt(maxAge, 10) : 0;
 
   return token && maxAge && now <= expiry ? children : <Navigate to="/login" replace />;
